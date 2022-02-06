@@ -144,6 +144,15 @@ const (
 
 	TkInputNone      = 0
 	TkInputCancelled = -1
+
+	TkAlignDefault = 0
+	TkAlignLeft    = 1
+	TkAlignRight   = 2
+	TkAlignCenter  = 3
+	TkAlignTop     = 4
+	TkAlignBottom  = 8
+	TkAlignMiddle  = 12
+
 )
 
 // This should be called first. This initializes the library and
@@ -264,7 +273,12 @@ func Print(x, y int, s string) {
 	C.terminal_print(C.int(x), C.int(y), str)
 	C.free(unsafe.Pointer(str))
 }
-
+//
+func PrintExt(x, y, width, height, align int, s string) {
+	str := C.CString(s)
+	C.terminal_print_ext(C.int(x), C.int(y), C.int(width), C.int(height), C.int(align), str)
+	C.free(unsafe.Pointer(str))
+}
 //
 func Measure(s string) {
 	str := C.CString(s)
